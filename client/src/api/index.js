@@ -1,7 +1,7 @@
 //This is all of our API endpoints. fetchPosts etc are the API endpoints
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://mern-memories-v2.herokuapp.com/' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
