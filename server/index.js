@@ -1,5 +1,5 @@
 import express from 'express';
-// import bodyParser from 'body-parser';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.send('APP IS RUNNING! HURRAY!');
 });
 
-const CONNECTION_URL = 'mongodb+srv://js_mastery:M6WfDnJEoj9HkV2d@practice.jto9p.mongodb.net/memories_app?retryWrites=true&w=majority';
+const CONNECTION_URL = 'mongodb+srv://mattoattacko:mattmatt7878!@cluster0.gn0wy.mongodb.net/Project0?retryWrites=true&w=majority';
 const PORT = process.env.PORT|| 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })

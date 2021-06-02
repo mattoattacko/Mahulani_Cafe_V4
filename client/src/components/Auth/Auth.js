@@ -79,7 +79,7 @@ const SignUp = () => {
             { isSignup ? 'Sign Up' : 'Sign In' }
           </Button>
           <GoogleLogin
-            clientId="484517621541-o8rn3amkb15g7fp1cieune6a4uif4efo.apps.googleusercontent.com"
+            clientId="484517621541-08m54kmhp6vk0r2f88p77oi1ibi2mql9.apps.googleusercontent.com"
             render={(renderProps) => (
               <Button className={classes.googleButton} color="primary" fullWidth onClick={renderProps.onClick} disabled={renderProps.disabled} startIcon={<Icon />} variant="contained">
                 Google Sign In
