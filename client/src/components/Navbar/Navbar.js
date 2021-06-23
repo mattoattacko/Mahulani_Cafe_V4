@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 
 // import memoriesLogo from '../../images/memories-Logo.png';
-import memoriesText from '../../images/memories-Text.png';
+import memoriesText from '../../images/mahulani-text.png';
 
 import surfingicon from '../../images/surfingicon.png';
 
