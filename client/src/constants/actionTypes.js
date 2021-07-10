@@ -5,6 +5,7 @@ export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_POST = 'FETCH_POST';
 export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
 export const LIKE = 'LIKE';
+export const COMMENT = 'COMMENT';
 
 //we use these action types so that our redux reducers know when to start and stop loading
 export const START_LOADING = 'START_LOADING';
