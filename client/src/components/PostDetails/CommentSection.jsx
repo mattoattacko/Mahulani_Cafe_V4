@@ -18,9 +18,11 @@ const CommentSection = ({ post }) => {
   const handleComment = async () => {
     const newComments = await dispatch(commentPost(`${user?.result?.name}: ${comment}`, post._id));
 
+    //sets the data in the text field to an empty string, which will clear it out
     setComment('');
+    //sets our comment immediatly
     setComments(newComments);
-
+    //scrolls new comments into view
     commentsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -29,12 +31,14 @@ const CommentSection = ({ post }) => {
       <div className={classes.commentsOuterContainer}>
         <div className={classes.commentsInnerContainer}>
           <Typography gutterBottom variant="h6">Comments</Typography>
-          {comments?.map((comment, i) => (
+          {comments?.map((c, i) => (
             <Typography key={i} gutterBottom variant="subtitle1">
-              <strong>{comment.split(': ')[0]}</strong>
-              {comment.split(':')[1]}
+              {/* gives us the username */}
+              <strong>{c.split(': ')[0]}</strong>
+              {c.split(':')[1]}
             </Typography>
           ))}
+          {/* we always know this div is at the end of our messages */}
           <div ref={commentsRef} />
         </div>
         <div style={{ width: '70%' }}>
@@ -42,7 +46,7 @@ const CommentSection = ({ post }) => {
           <TextField fullWidth rows={4} variant="outlined" label="Comment" multiline value={comment} onChange={(e) => setComment(e.target.value)} />
           <br />
           <Button style={{ marginTop: '10px' }} fullWidth disabled={!comment.length} color="primary" variant="contained" onClick={handleComment}>
-            Comment
+            Post Comment
           </Button>
         </div>
       </div>

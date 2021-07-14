@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from '@material-ui/core/';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 
-import { getPost, likePost, deletePost } from '../../../actions/posts';
+import { likePost, deletePost } from '../../../actions/posts';
 import useStyles from './styles';
 
 const Post = ({ post, setCurrentId }) => {
@@ -16,14 +16,35 @@ const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const history = useHistory();
   const user = JSON.parse(localStorage.getItem('profile'));
+  const [likes, setLikes] = useState(post?.likes);
 
+  //gets either the users ID from Google, or our database
+  const userId = user?.result.googleId || user?.result?._id;
+  //checks if the current user liked the post already
+  const hasLikedPostAlready = likes.find((like) => like === userId)
+
+  //This helps fix the slow display of liking a post. Since updates to the database are async and take time. For a better user experience, we code the like count to go up instantly so that our users see their input instantly. The like count to the database still takes a few seconds longer to update, but the user will see their like immediatly. 
+  const handleLike = async () => {
+    dispatch(likePost(post._id));
+
+    if(hasLikedPostAlready) {
+      //if current user has already liked the post. Filters out the ID of that specific user. Basically unliking a post.
+      setLikes(likes.filter((id) => id !== userId))
+    } else {
+      //if they havent liked it, we spread all of the current Likes and add the new one. 
+      setLikes([ ...likes, userId]);
+    }
+  };
+
+
+  //we are getting the post passed through props, and then using that post to find out the length of the likes in that specific likes array. Based on that, we show how many likes a post has.
   const Likes = () => {
     if (post?.likes?.length > 0) {
-      return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+      return likes.find((like) => like === userId)
         ? (
-          <><ThumbUpAltIcon fontSize="small" />&nbsp;{post.likes.length > 2 ? `You and ${post.likes.length - 1} others` : `${post.likes.length} like${post.likes.length > 1 ? 's' : ''}` }</>
+          <><ThumbUpAltIcon fontSize="small" />&nbsp;{likes.length > 2 ? `You and ${likes.length - 1} others` : `${likes.length} like${likes.length > 1 ? 's' : ''}` }</>
         ) : (
-          <><ThumbUpAltOutlined fontSize="small" />&nbsp;{post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}</>
+          <><ThumbUpAltOutlined fontSize="small" />&nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}</>
         );
     }
 
@@ -71,7 +92,7 @@ const Post = ({ post, setCurrentId }) => {
         </CardContent>
       </ButtonBase>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+        <Button size="small" color="primary" disabled={!user?.result} onClick={handleLike}>
           <Likes />
         </Button>
         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
