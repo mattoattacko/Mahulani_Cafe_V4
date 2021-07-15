@@ -16,11 +16,11 @@ const App = () => {
         <Navbar />
         {/* This decides when we render the home component, and what address will trigger the render */}
         <Switch>
-          <Route path="/" exact component={() => <Redirect to="/posts" />} />
-          <Route path="/posts" exact component={Home} />
-          <Route path="/posts/search" exact component={Home} />
-          <Route path="/posts/:id" exact component={PostDetails} />
-          <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
+        <Route path="/" exact component={Home} />
+        <Route path="/posts/pages/:page" exact component={Home} />
+        <Route path="/search/:searchQuery" exact component={Home} />
+        <Route path="/posts/:id" exact component={PostDetails} />
+        <Route path="/auth" exact component={Auth} />
         </Switch>
       </Container>
     </BrowserRouter>
